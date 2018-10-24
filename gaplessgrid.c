@@ -20,12 +20,24 @@ gaplessgrid(Monitor *m) {
 	cn = 0; /* current column number */
 	rn = 0; /* current row number */
 	for(i = 0, c = nexttiled(m->clients); c; i++, c = nexttiled(c->next)) {
+  	if (n == 1) {
+    	if (c->bw) {
+        /* remove border when only one window is on the current tag */
+        c->oldbw = c->bw;
+        c->bw = 0;
+      }
+    }
+    else if(!c->bw && c->oldbw) {
+      /* restore border when more than one window is displayed */
+      c->bw = c->oldbw;
+      c->oldbw = 0;
+    }
 		if(i/rows + 1 > cols - n%cols)
 			rows = n/cols + 1;
 		ch = rows ? m->wh / rows : m->wh;
 		cx = m->wx + cn*cw;
 		cy = m->wy + rn*ch;
-		resize(c, cx, cy, cw - 2 * c->bw, ch - 2 * c->bw, False);
+	  resize(c, cx, cy, cw - 2 * c->bw, ch - 2 * c->bw, False);
 		rn++;
 		if(rn >= rows) {
 			rn = 0;
