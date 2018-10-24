@@ -1,0 +1,14 @@
+Suckless patches and config
+============================
+My own patches and config to several suckless tools
+
+Requirements
+------------
+Same as upstream
+
+Installation
+------------
+Edit config.mk to match your local setup.
+Edit config.h to customize
+
+make install clean
